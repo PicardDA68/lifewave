@@ -126,21 +126,23 @@
     @keyframes mistDrift { from { transform: translate3d(-3%, -2%, 0) scale(1.05); } to { transform: translate3d(3%, 2%, 0) scale(1.12); } }
 
     .hero-inner {
-      position: relative; z-index: 2; max-width: 1120px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between; gap: 56px;
+      position: relative; z-index: 2; max-width: 1500px; margin: 0 auto; padding: 0 clamp(20px, 3vw, 48px); box-sizing: border-box;
+      display: flex; align-items: center; justify-content: space-between; gap: 48px;
     }
-    .hero-text { flex: 1 1 480px; max-width: 560px; }
-    .hero-photo-wrap { flex: 0 0 auto; }
+    .hero-text { flex: 0 0 520px; max-width: 520px; }
+    .hero-photo-wrap { flex: 1 1 0; min-width: 0; display: flex; justify-content: flex-end; }
     .hero-photo {
-      width: min(480px, 86vw); aspect-ratio: 2 / 3;
-      object-fit: cover; object-position: 40% top;
+      width: 100%; max-width: 900px; aspect-ratio: 3 / 2;
+      object-fit: cover; object-position: center 25%;
       border-radius: 18px; border: 2px solid var(--border);
       box-shadow: 0 20px 60px rgba(5,13,24,0.55);
       display: block;
     }
-    @media (max-width: 860px) {
+    @media (max-width: 1100px) {
       .hero-inner { flex-direction: column-reverse; text-align: center; gap: 32px; }
-      .hero-text { max-width: 100%; }
+      .hero-text { max-width: 100%; flex: 0 0 auto; }
+      .hero-photo-wrap { flex: 0 0 auto; width: 100%; justify-content: center; }
+      .hero-photo { max-width: 100%; }
       .hero-body { margin-left: auto; margin-right: auto; }
       .hero-actions { justify-content: center; }
     }
@@ -474,6 +476,40 @@
     }
     .pkg-features li::marker { color: var(--gold); }
 
+    /* ── ALAVIDA ─────────────────────────────── */
+    .alavida {
+      padding: 90px 22px;
+      background:
+        radial-gradient(ellipse at 10% 90%, rgba(95,180,229,0.10) 0%, transparent 50%),
+        var(--bg);
+    }
+
+    .alv-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .alv-card {
+      background: var(--purple-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px 20px;
+    }
+
+    .alv-card .alv-name {
+      font-family: Arial, sans-serif; font-size: 14px;
+      font-weight: 700; color: var(--gold-deep);
+      text-transform: uppercase; letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+
+    .alv-card .alv-desc {
+      font-family: Arial, sans-serif; font-size: 13.5px;
+      color: var(--off-white); line-height: 1.6;
+    }
+
     /* ── TESTIMONIALS ────────────────────────── */
     .testimonials {
       padding: 90px 22px;
@@ -601,6 +637,81 @@
       .btn-primary, .btn-ghost, .btn-wa, .btn-email { width: 100%; justify-content: center; }
       .cta-buttons { flex-direction: column; align-items: center; }
     }
+
+    /* ── SAVE-THIS-PAGE POPUP ────────────────── */
+    body.save-modal-open { overflow: hidden; }
+    body.save-modal-open > *:not(.save-backdrop) { filter: blur(3px) brightness(0.9); }
+
+    .save-backdrop {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(5, 13, 24, 0.55);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    body.save-modal-open .save-backdrop { opacity: 1; pointer-events: auto; }
+
+    .save-modal {
+      width: 100%; max-width: 400px;
+      background: var(--purple-card);
+      border: 1.5px solid var(--gold);
+      border-radius: 12px;
+      padding: 34px 30px 28px;
+      box-shadow: 0 30px 70px rgba(5,13,24,0.45);
+      position: relative;
+      text-align: center;
+      transform: translateY(18px) scale(0.97);
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(.2,.9,.25,1), opacity 0.25s ease;
+    }
+    body.save-modal-open .save-modal { transform: translateY(0) scale(1); opacity: 1; }
+
+    .save-modal-close {
+      position: absolute; top: 14px; right: 14px;
+      width: 30px; height: 30px; border-radius: 50%;
+      border: 1.5px solid var(--border); background: transparent; color: var(--muted);
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+    }
+    .save-modal-close svg { width: 13px; height: 13px; }
+
+    .save-modal-icon {
+      width: 56px; height: 56px; margin: 4px auto 18px; border-radius: 50%;
+      background: rgba(95,180,229,0.92);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .save-modal-icon svg { width: 24px; height: 24px; stroke: var(--dark); }
+
+    .save-modal h3 {
+      font-family: 'Georgia', serif; font-weight: normal;
+      font-size: 26px; color: var(--ink); margin-bottom: 10px; line-height: 1.2;
+    }
+    .save-modal .save-sub {
+      font-family: Arial, sans-serif; font-size: 14px; color: var(--muted);
+      line-height: 1.6; margin-bottom: 22px; padding: 0 4px;
+    }
+
+    .save-whocard {
+      display: flex; align-items: center; gap: 12px; text-align: left;
+      background: var(--purple-mid); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 14px; margin-bottom: 22px;
+    }
+    .save-whocard .mono {
+      width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%;
+      background: var(--gold-deep); color: #fff;
+      font-family: Arial, sans-serif; font-weight: 700; font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .save-whocard .who p { font-family: Arial, sans-serif; }
+    .save-whocard .who .n { font-size: 13.5px; font-weight: 700; color: var(--ink); margin: 0; }
+    .save-whocard .who .r { font-size: 11.5px; color: var(--muted); margin: 2px 0 0; }
+
+    .save-btn {
+      width: 100%; border: none; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    }
+    .save-btn svg { width: 17px; height: 17px; }
+    .save-btn.done { background: #2fb872 !important; }
   </style>
 </head>
 <body>
@@ -610,14 +721,17 @@
   <div class="nav-inner">
     <div class="nav-links">
       <a href="#videos">X39</a>
+      <a href="#technology">Technology</a>
       <a href="#patched">Patches</a>
+      <a href="#sports">Sports</a>
+      <a href="#alavida">Skincare</a>
       <a href="#testimonials">Testimonies</a>
       <a href="#doctors">Doctors</a>
       <a href="#packages">Business</a>
     </div>
     <a href="https://wa.me/64212752618?text=Hi%20Dean%2C%20I%27d%20like%20to%20know%20more." target="_blank" rel="noopener" class="nav-wa">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      <span>WhatsApp</span>
+      <span>Contact Dean</span>
     </a>
   </div>
 </nav>
@@ -627,18 +741,18 @@
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-text">
-      <h1>You found this<br><em>for a reason.</em></h1>
-      <p class="hero-body">
-        For people who want their health<br>back, and are ready to start building<br>real income at the same time.
-      </p>
-      <p class="hero-note" style="margin-top: 8px;">No obligation. Watch, ask questions, then decide.</p>
-      <div class="hero-actions" style="margin-top: 34px;">
-        <a href="#videos" class="btn-primary">Watch the Videos</a>
-        <a href="#contact" class="btn-primary">Book a Presentation</a>
-      </div>
+    <h1>You found this<br><em>for a reason.</em></h1>
+    <p class="hero-body">
+      For people who want their health<br>back, and are ready to start building<br>real income at the same time.
+    </p>
+    <p class="hero-note" style="margin-top: 8px;">No obligation. Watch, ask questions, then decide.</p>
+    <div class="hero-actions" style="margin-top: 34px;">
+      <a href="#videos" class="btn-primary">Watch the Videos</a>
+      <a href="#contact" class="btn-primary">Book a Presentation</a>
+    </div>
     </div>
     <div class="hero-photo-wrap">
-      <img src="dean-lyrese-hero.jpg" alt="Dean and Lyrese Picard" class="hero-photo" />
+      <img src="dean-lyrese-hero-v4.jpg" alt="Dean and Lyrese Picard" class="hero-photo" />
     </div>
   </div>
 </section>
@@ -694,6 +808,32 @@
         </div>
       </div>
 
+    </div>
+
+    <div id="technology" style="margin-top: 48px; padding-top: 44px; border-top: 1px solid var(--border);">
+      <div class="videos-intro" style="margin-bottom: 32px;">
+        <p class="section-label">The Technology</p>
+        <h2>Meet the man behind the patch.</h2>
+        <p>David Schmidt founded LifeWave in 2002 around his own patented phototherapy technology, after developing a drug-free energy solution for the US Navy SEALs rooted in DARPA-funded mitochondrial research. 30+ years into product development, he now holds roughly 180 to 200 patents globally, the same foundation behind X39, Alavida, and everything else LifeWave makes.</p>
+      </div>
+
+      <div class="video-wrap" style="max-width: 640px; margin: 0 auto 32px;">
+        <div class="video-thumb" data-src="https://www.youtube.com/embed/3zkgRcPOsG0?rel=0&modestbranding=1&autoplay=1&playsinline=1">
+          <img src="https://img.youtube.com/vi/3zkgRcPOsG0/maxresdefault.jpg" alt="Who Is David Schmidt?" />
+          <div class="play-btn"></div>
+        </div>
+        <div class="video-meta">
+          <p class="v-label">The Founder &nbsp;&mdash;&nbsp; 2:12</p>
+          <p class="v-title">Who Is David Schmidt?</p>
+        </div>
+      </div>
+
+      <div class="testi-card" style="max-width: 640px; margin: 0 auto;">
+        <span class="testi-quote-mark">"</span>
+        <p class="testi-text">After developing products for over 30 years and holding over 100 patents globally, X39 is my greatest achievement.</p>
+        <p class="testi-name">David Schmidt</p>
+        <p class="testi-role">Founder &amp; CEO, LifeWave</p>
+      </div>
     </div>
 
     <div style="margin-top: 36px; padding: 34px 32px; background: linear-gradient(135deg, rgba(95,180,229,0.14) 0%, rgba(25,79,144,0.10) 100%); border: 2px solid var(--gold); border-radius: 12px; box-shadow: 0 8px 30px rgba(25,79,144,0.15);">
@@ -756,9 +896,232 @@
 <div style="text-align:center; padding: 30px 22px;">
   <a href="https://wa.me/64212752618?text=Hi%20Dean%2C%20I%27d%20like%20to%20know%20more." target="_blank" rel="noopener" class="nav-wa" style="padding: 10px 20px; font-size: 13px;">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    <span style="display:inline;">Contact Us on WhatsApp</span>
+    <span style="display:inline;">Contact Dean</span>
   </a>
 </div>
+
+<div class="divider"></div>
+
+
+<!-- ───────── SPORTS ───────── -->
+<section class="alavida" id="sports">
+  <div class="container-wide">
+
+    <div class="videos-intro">
+      <p class="section-label">Trusted by champions &nbsp;&bull;&nbsp; Clean. Natural. Non-Invasive.</p>
+      <h2 style="font-size: clamp(22px, 4vw, 42px);">X39: trusted in sports.</h2>
+      <p>Meet Jason Fowler. Paralysed from the chest down after a motocross crash at 17, he went on to win the Ironman World Championship twice, racing in a racing wheelchair. He is an official LifeWave spokesperson and uses X39. Then meet Bruce &ldquo;The Boss&rdquo; Robertson, a multiple national motocross champion who wears X39 every day.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; max-width: 1000px; margin: 0 auto 36px;">
+      <div class="alv-card" style="margin: 0;">
+      <p class="alv-name">Jason Fowler</p>
+      <p class="alv-desc" style="margin-bottom: 14px;">2x Ironman World Champion (2009 and 2016) &nbsp;&bull;&nbsp; Half Ironman World Champion (2012) &nbsp;&bull;&nbsp; 28 marathons &nbsp;&bull;&nbsp; High-performance mindset coach</p>
+      <p style="font-family: Georgia, serif; font-size: 18px; line-height: 1.55; font-style: italic; margin: 0 0 6px;">&ldquo;I stick one on my arm, I wake up the next morning, all of a sudden I&rsquo;ve got less soreness in my shoulder.&rdquo;</p>
+      <p style="font-family: Georgia, serif; font-size: 18px; line-height: 1.55; font-style: italic; margin: 0 0 12px;">&ldquo;Every day when you wake up, you can choose to have any attitude you want. That mindset is the reason why I use LifeWave.&rdquo;</p>
+      <p style="font-family: Arial, sans-serif; font-size: 12px; color: var(--muted); margin: 0;">Jason&rsquo;s personal experience as a LifeWave spokesperson. Results vary.</p>
+    </div>
+      <div class="alv-card" style="margin: 0;">
+        <p class="alv-name">Bruce &ldquo;The Boss&rdquo; Robertson</p>
+        <p class="alv-desc" style="margin-bottom: 14px;">Multiple National Supercross, Motocross &amp; Moto-X Champion &nbsp;&bull;&nbsp; Founder, Bruce The Boss Riding Academy, South Africa</p>
+        <p style="font-family: Georgia, serif; font-size: 18px; line-height: 1.55; font-style: italic; margin: 0 0 6px;">&ldquo;I&rsquo;m a patcher for life.&rdquo;</p>
+        <p style="font-family: Georgia, serif; font-size: 18px; line-height: 1.55; font-style: italic; margin: 0 0 12px;">&ldquo;It&rsquo;s 5 times better than I could ever pray for.&rdquo;</p>
+        <p style="font-family: Arial, sans-serif; font-size: 12px; color: var(--muted); margin: 0;">Bruce&rsquo;s personal experience with LifeWave X39. Results vary.</p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; max-width: 1000px; margin: 0 auto 40px;">
+      <div>
+      <h3 style="font-family: Georgia, serif; font-weight: 400; font-size: clamp(20px, 3vw, 28px); color: var(--gold-deep); text-align: center; margin: 0 0 18px;">Hear from Jason Fowler.</h3>
+
+      <div class="video-wrap">
+        <div class="video-thumb" data-src="https://www.youtube.com/embed/rFAEHPc9SSw?rel=0&modestbranding=1&autoplay=1&playsinline=1">
+          <img src="https://img.youtube.com/vi/rFAEHPc9SSw/maxresdefault.jpg" alt="Jason Fowler, Ironman World Champion, on using LifeWave X39" />
+          <div class="play-btn"></div>
+        </div>
+        <div class="video-meta">
+          <p class="v-label">Jason Fowler &nbsp;&bull;&nbsp; 2x Ironman World Champion</p>
+          <p class="v-title">Jason Fowler&rsquo;s story and why he uses LifeWave X39</p>
+        </div>
+      </div>
+      </div>
+      <div>
+      <h3 style="font-family: Georgia, serif; font-weight: 400; font-size: clamp(20px, 3vw, 28px); color: var(--gold-deep); text-align: center; margin: 0 0 18px;">Hear from Bruce The Boss.</h3>
+
+      <div class="video-wrap">
+        <div class="video-thumb" data-src="https://www.youtube.com/embed/Ic8HnyQxsRQ?rel=0&modestbranding=1&autoplay=1&playsinline=1">
+          <img src="https://img.youtube.com/vi/Ic8HnyQxsRQ/maxresdefault.jpg" alt="Bruce Robertson, multiple national motocross champion, on using LifeWave X39" />
+          <div class="play-btn"></div>
+        </div>
+        <div class="video-meta">
+          <p class="v-label">Bruce Robertson &nbsp;&bull;&nbsp; National Motocross Champion</p>
+          <p class="v-title">Bruce &ldquo;The Boss&rdquo; Robertson: my X39 testimony</p>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div style="max-width: 486px; margin: 0 auto 40px;">
+      <h3 style="font-family: Georgia, serif; font-weight: 400; font-size: clamp(20px, 3vw, 28px); color: var(--gold-deep); text-align: center; margin: 0 0 18px;">X49 for sports.</h3>
+
+      <div class="video-wrap">
+        <div class="video-thumb" data-src="https://www.youtube.com/embed/O-mg56LBZmU?rel=0&modestbranding=1&autoplay=1&playsinline=1">
+          <img src="https://img.youtube.com/vi/O-mg56LBZmU/maxresdefault.jpg" alt="LifeWave X49 for sports" />
+          <div class="play-btn"></div>
+        </div>
+        <div class="video-meta">
+          <p class="v-label">X49 &nbsp;&bull;&nbsp; For Sports</p>
+          <p class="v-title">LifeWave X49: redefine your prime</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="alv-grid">
+      <div class="alv-card">
+        <p class="alv-name">100% Natural</p>
+        <p class="alv-desc">No chemicals. Nothing enters your body.</p>
+      </div>
+      <div class="alv-card">
+        <p class="alv-name">No Stimulants. No Drugs.</p>
+        <p class="alv-desc">Drug-free, with no stimulants of any kind.</p>
+      </div>
+      <div class="alv-card">
+        <p class="alv-name">Non-Invasive</p>
+        <p class="alv-desc">A patch worn on the skin. Nothing to swallow or inject.</p>
+      </div>
+      <div class="alv-card">
+        <p class="alv-name">Not On The WADA List</p>
+        <p class="alv-desc">LifeWave has reviewed its products against the WADA Prohibited List and found nothing on it.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:32px; text-align:center;">
+      <a href="https://wa.me/64212752618?text=Hi%20Dean%2C%20I%27d%20like%20to%20know%20more%20about%20X39%20for%20sport." target="_blank" rel="noopener" class="btn-primary">Ask About X39 For Sport &rarr;</a>
+    </div>
+
+    <p style="margin-top: 28px; font-family: Arial, sans-serif; font-size: 12px; color: var(--muted); line-height: 1.7; text-align:center;">
+      LifeWave and X39 are not intended to diagnose, treat, cure, or prevent any disease. Individual results may vary. WADA does not certify or endorse products. Athletes should check with their medical team and anti-doping body before use.
+    </p>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ───────── ALAVIDA ───────── -->
+<section class="alavida" id="alavida">
+  <div class="container-wide">
+
+    <div class="videos-intro">
+      <p class="section-label">Also New &nbsp;&bull;&nbsp; Naturally Derived. Scientifically Proven.</p>
+      <h2 style="font-size: clamp(22px, 4vw, 42px);">Alavida: a morning and night ritual.</h2>
+      <p>Alongside X39, we've launched Alavida, a regenerating system built with copper peptide and 98.6% naturally-derived, plant-based ingredients. In an independent clinical evaluation, nearly 90% of participants saw a significant improvement in the appearance of their skin within 3 weeks. It's a simple daily and nightly ritual, not a treatment, just skincare that supports how your skin looks and feels.</p>
+    </div>
+
+    <div class="video-wrap" style="max-width: 640px; margin: 0 auto 40px;">
+      <div class="video-thumb" data-src="https://www.youtube.com/embed/F41piEtSMrI?rel=0&modestbranding=1&autoplay=1&playsinline=1">
+        <img src="https://img.youtube.com/vi/F41piEtSMrI/maxresdefault.jpg" alt="Alavida Regenerating System: Science and Nature for More Vibrant-Looking Skin" />
+        <div class="play-btn"></div>
+      </div>
+      <div class="video-meta">
+        <p class="v-label">See The Science &nbsp;&mdash;&nbsp; Alavida</p>
+        <p class="v-title">Alavida Regenerating System: Science &amp; Nature for More Vibrant-Looking Skin</p>
+      </div>
+    </div>
+
+    <div class="alv-grid">
+      <div class="alv-card">
+        <p class="alv-name">Alavida Patch</p>
+        <p class="alv-desc">Worn overnight as part of LifeWave's patented phototherapy patch technology. Used alongside the Nightly Restore Créme as the last step of your evening ritual.</p>
+      </div>
+      <div class="alv-card">
+        <p class="alv-name">Daily Refresh Facial Nectar</p>
+        <p class="alv-desc">A lightweight two-in-one daytime moisturizer, a fresh base to start the morning before makeup or your day.</p>
+      </div>
+      <div class="alv-card">
+        <p class="alv-name">Nightly Restore Facial Créme</p>
+        <p class="alv-desc">Your nighttime moisturizer, formulated to complement the Nectar for round-the-clock hydration.</p>
+      </div>
+      <div class="alv-card">
+        <p class="alv-name">Revive Eye Cream</p>
+        <p class="alv-desc">Infused with copper peptide, targeting the appearance of puffiness, uneven tone, and firmness around the eyes.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:32px; text-align:center;">
+      <a href="https://wa.me/64212752618?text=Hi%20Dean%2C%20I%27d%20like%20to%20know%20more%20about%20Alavida." target="_blank" rel="noopener" class="btn-primary">Ask About Alavida &rarr;</a>
+    </div>
+
+    <p style="margin-top: 28px; font-family: Arial, sans-serif; font-size: 12px; color: var(--muted); line-height: 1.7; text-align:center;">
+      Cosmetic skincare only. Alavida is not designed to treat, cure, or prevent any disease or condition, and results describe appearance only. Individual results vary.
+    </p>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ───────── TESTIMONIALS ───────── -->
+<section class="testimonials" id="testimonials">
+  <div class="container-wide">
+
+    <div class="testi-intro">
+      <p class="section-label">Real Results</p>
+      <h2>From people already inside.</h2>
+    </div>
+
+    <div class="testi-grid">
+
+      <!-- TESTIMONIAL 1 — Sarah Saunders -->
+      <div class="testi-card">
+        <span class="testi-quote-mark">"</span>
+        <p class="testi-text">
+          I live with severe chronic pain from CRPS, and for a long time nothing seemed to help. The pain became so overwhelming that I reached a point where I no longer wanted to keep living, which shows just how severe and relentless it felt. Then I was introduced to the LifeWave patches, and within 15 minutes I experienced relief that helped me start living my life again. After a couple of months of using the patches, I personally noticed changes in my daily life, including being able to eat bananas again and not needing my asthma pump as I had before. For me, this experience brought back a sense of possibility, gratitude, and hope for the future.
+        </p>
+        <p class="testi-name">Sarah Saunders</p>
+        <p class="testi-role">New Zealand</p>
+        <a href="#videos" style="display:inline-block; margin-top:14px; font-family:Arial,sans-serif; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-deep); text-decoration:none; border-bottom: 1px solid var(--gold-dim); padding-bottom:2px;">&#9654; Watch Sarah's full story in the videos above</a>
+      </div>
+
+      <!-- TESTIMONIAL 2 — Jacqueline Bekker -->
+      <div class="testi-card">
+        <span class="testi-quote-mark">"</span>
+        <p class="testi-text">
+          As a woman of faith turning 50 this year, I had been living with constant pain that affected my mobility, independence, and hope. My knee and neck pain made everyday tasks difficult and left me emotionally and physically drained. Since using the LifeWave patches, I've experienced significant pain relief and improved mobility, often feeling relief shortly after applying them. I can now move more freely, stand up easily, and enjoy a renewed sense of peace and possibility. My message to others is simple: don't give up on yourself - every new day is a chance to rediscover hope and make a difference.
+        </p>
+        <p class="testi-name">Jacqueline Bekker</p>
+        <p class="testi-role">South Africa</p>
+      </div>
+
+      <!-- TESTIMONIAL 3 — Johan van der Schyff -->
+      <div class="testi-card">
+        <span class="testi-quote-mark">"</span>
+        <p class="testi-text">
+          I have an old shoulder injury which I injured again, leaving me in a lot of pain and reduced mobility. After applying a patch to my left shoulder, the pain started to settle within 3 to 5 minutes. The muscle pain became calmer and noticeably less intense. It's not completely healed yet, but I've continued using the patches and have experienced slow, steady improvement each day. After the first day it felt sore again, but since then it has continued getting better, and we're trusting for complete healing. For me, this has brought a huge sense of relief.
+        </p>
+        <p class="testi-name">Johan van der Schyff</p>
+        <p class="testi-role">New Zealand</p>
+      </div>
+
+    </div>
+
+    <p style="margin-top: 32px; font-family: Arial, sans-serif; font-size: 12px; color: var(--muted); line-height: 1.7;">
+      Personal experience only. Individual results vary. Not medical advice. LifeWave products do not treat, cure, or prevent any disease or condition. LifeWave makes no financial claims. Income results depend entirely on individual effort, skill, and personal activity. Financial results vary.
+    </p>
+
+  </div>
+</section>
+
+<a id="doctors" href="https://thisisitinfo.com/doctors-answers" target="_blank" rel="noopener" style="display: block; background: #194F90; padding: 36px 22px; text-align: center; text-decoration: none;">
+  <p style="font-family: Arial, sans-serif; font-size: clamp(20px, 3vw, 28px); font-weight: 700; color: #FFFFFF; margin: 0 0 8px; line-height: 1.3;">
+    Hear What The Doctors Have To Say &rarr;
+  </p>
+  <p style="font-family: Arial, sans-serif; font-size: 13px; color: rgba(255,255,255,0.85); margin: 0; letter-spacing: 0.03em;">
+    Tap here for real doctor interviews on LifeWave X39
+  </p>
+</a>
 
 <div class="divider"></div>
 
@@ -769,9 +1132,16 @@
 
     <div class="packages-intro">
       <p class="section-label">Your Starting Point</p>
-      <h2>Choose the level that fits where you are right now.</h2>
-      <p>Four packages. Same dedication at every level, different income streams, different tools, and different avenues of support as you move up. Pricing and full details are covered in the presentation.</p>
+      <h2 style="font-size: clamp(22px, 4vw, 42px);">There's a business side too.</h2>
+      <p>If health is the reason you're here, the income opportunity might be the reason you stay. Four package levels, each one unlocking more income streams, tools, and support as you grow.</p>
     </div>
+
+    <div style="padding: 34px 32px; background: linear-gradient(135deg, rgba(95,180,229,0.14) 0%, rgba(25,79,144,0.10) 100%); border: 2px solid var(--gold); border-radius: 12px; box-shadow: 0 8px 30px rgba(25,79,144,0.15); text-align: center;">
+      <p style="font-family: Arial, sans-serif; font-size: 19px; color: var(--ink); font-weight: 700; margin: 0 auto 18px; max-width: 560px; line-height: 1.4;">See the four packages, what each one unlocks,<br>and the 90-Day Run to Director.</p>
+      <button type="button" id="pkgToggleBtn" class="btn-primary" style="border: none; cursor: pointer;">Show Me The Packages &rarr;</button>
+    </div>
+
+    <div id="pkgDetails" style="display: none; margin-top: 36px;">
 
     <div class="pkg-grid">
 
@@ -893,7 +1263,7 @@
             <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
               <a href="https://wa.me/64212752618?text=Hi%20Dean%2C%20I%27d%20like%20to%20know%20more%20about%20the%2090-Day%20Run%20to%20Director%20and%20whether%20I%20qualify%20to%20join%20the%20next%20intake." target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:8px; background:#25D366; color:#fff; padding:13px 22px; border-radius:4px; font-family:Arial,sans-serif; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                WhatsApp Dean
+                Contact Dean
               </a>
               <a href="mailto:dean.picard@xtra.co.nz?subject=90-Day%20Run%20to%20Director%20%E2%80%94%20I%27d%20like%20to%20know%20more&body=Hi%20Dean%2C%0A%0AI%27d%20like%20to%20find%20out%20more%20about%20the%2090-Day%20Run%20to%20Director%20and%20whether%20I%20qualify%20to%20join%20the%20next%20intake.%0A%0AMy%20name%3A%0AMy%20current%20Lifewave%20package%20(if%20already%20a%20member)%3A%0A%0ALooking%20forward%20to%20hearing%20from%20you." style="display:inline-flex; align-items:center; gap:8px; background:transparent; color:var(--gold); border:1px solid var(--border); padding:13px 22px; border-radius:4px; font-family:Arial,sans-serif; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
@@ -918,71 +1288,10 @@
       </a>
     </div>
 
-  </div>
-</section>
-
-<div class="divider"></div>
-
-
-<!-- ───────── TESTIMONIALS ───────── -->
-<section class="testimonials" id="testimonials">
-  <div class="container-wide">
-
-    <div class="testi-intro">
-      <p class="section-label">Real Results</p>
-      <h2>From people already inside.</h2>
-    </div>
-
-    <div class="testi-grid">
-
-      <!-- TESTIMONIAL 1 — Sarah Saunders -->
-      <div class="testi-card">
-        <span class="testi-quote-mark">"</span>
-        <p class="testi-text">
-          I live with severe chronic pain from CRPS, and for a long time nothing seemed to help. The pain became so overwhelming that I reached a point where I no longer wanted to keep living, which shows just how severe and relentless it felt. Then I was introduced to the LifeWave patches, and within 15 minutes I experienced relief that helped me start living my life again. After a couple of months of using the patches, I personally noticed changes in my daily life, including being able to eat bananas again and not needing my asthma pump as I had before. For me, this experience brought back a sense of possibility, gratitude, and hope for the future.
-        </p>
-        <p class="testi-name">Sarah Saunders</p>
-        <p class="testi-role">New Zealand</p>
-        <a href="#videos" style="display:inline-block; margin-top:14px; font-family:Arial,sans-serif; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-deep); text-decoration:none; border-bottom: 1px solid var(--gold-dim); padding-bottom:2px;">&#9654; Watch Sarah's full story in the videos above</a>
-      </div>
-
-      <!-- TESTIMONIAL 2 — Jacqueline Bekker -->
-      <div class="testi-card">
-        <span class="testi-quote-mark">"</span>
-        <p class="testi-text">
-          As a woman of faith turning 50 this year, I had been living with constant pain that affected my mobility, independence, and hope. My knee and neck pain made everyday tasks difficult and left me emotionally and physically drained. Since using the LifeWave patches, I've experienced significant pain relief and improved mobility, often feeling relief shortly after applying them. I can now move more freely, stand up easily, and enjoy a renewed sense of peace and possibility. My message to others is simple: don't give up on yourself - every new day is a chance to rediscover hope and make a difference.
-        </p>
-        <p class="testi-name">Jacqueline Bekker</p>
-        <p class="testi-role">South Africa</p>
-      </div>
-
-      <!-- TESTIMONIAL 3 — Johan van der Schyff -->
-      <div class="testi-card">
-        <span class="testi-quote-mark">"</span>
-        <p class="testi-text">
-          I have an old shoulder injury which I injured again, leaving me in a lot of pain and reduced mobility. After applying a patch to my left shoulder, the pain started to settle within 3 to 5 minutes. The muscle pain became calmer and noticeably less intense. It's not completely healed yet, but I've continued using the patches and have experienced slow, steady improvement each day. After the first day it felt sore again, but since then it has continued getting better, and we're trusting for complete healing. For me, this has brought a huge sense of relief.
-        </p>
-        <p class="testi-name">Johan van der Schyff</p>
-        <p class="testi-role">New Zealand</p>
-      </div>
-
-    </div>
-
-    <p style="margin-top: 32px; font-family: Arial, sans-serif; font-size: 12px; color: var(--muted); line-height: 1.7;">
-      Personal experience only. Individual results vary. Not medical advice. LifeWave products do not treat, cure, or prevent any disease or condition. LifeWave makes no financial claims. Income results depend entirely on individual effort, skill, and personal activity. Financial results vary.
-    </p>
+    </div><!-- /#pkgDetails -->
 
   </div>
 </section>
-
-<a id="doctors" href="https://thisisitinfo.com/doctors-answers" target="_blank" rel="noopener" style="display: block; background: #194F90; padding: 36px 22px; text-align: center; text-decoration: none;">
-  <p style="font-family: Arial, sans-serif; font-size: clamp(20px, 3vw, 28px); font-weight: 700; color: #FFFFFF; margin: 0 0 8px; line-height: 1.3;">
-    Hear What The Doctors Have To Say &rarr;
-  </p>
-  <p style="font-family: Arial, sans-serif; font-size: 13px; color: rgba(255,255,255,0.85); margin: 0; letter-spacing: 0.03em;">
-    Tap here for real doctor interviews on LifeWave X39
-  </p>
-</a>
 
 <div class="divider"></div>
 
@@ -991,7 +1300,7 @@
 <section class="cta-final" id="contact">
   <div class="container">
     <p class="section-label" style="justify-content: center;">Next Step</p>
-    <h2>Interested? Come to a presentation.</h2>
+    <h2>Interested?<br>Come to a presentation.</h2>
     <p class="cta-sub">No pressure. No obligation. See the full picture, ask every question, then make a decision that makes sense for you.</p>
 
     <p style="font-family:Arial,sans-serif; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-deep); margin-bottom:28px;">( Or contact the person who shared this link with you )</p>
@@ -1002,7 +1311,7 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
         </svg>
-        WhatsApp Dean
+        Contact Dean
       </a>
       <a href="mailto:dean.picard@xtra.co.nz" class="btn-email">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1029,6 +1338,35 @@
 </footer>
 
 
+<!-- ───────── SAVE THIS PAGE POPUP ───────── -->
+<div class="save-backdrop" id="saveBackdrop">
+  <div class="save-modal">
+    <button class="save-modal-close" id="saveModalClose" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <div class="save-modal-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+    </div>
+
+    <h3>Save This Page</h3>
+    <p class="save-sub">Add us to your contacts so you can always find your way back, no more losing the link.</p>
+
+    <div class="save-whocard">
+      <div class="mono">DP</div>
+      <div class="who">
+        <p class="n">Dean Picard</p>
+        <p class="r">LifeWave&reg; Independent Brand Partner</p>
+      </div>
+    </div>
+
+    <button type="button" class="btn-primary save-btn" id="saveContactBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span id="saveContactLabel">Save &amp; Continue</span>
+    </button>
+  </div>
+</div>
+
 <!-- ───────── VIDEO CLICK-TO-PLAY ───────── -->
 <script>
   document.querySelectorAll('.video-thumb').forEach(function(thumb) {
@@ -1048,6 +1386,93 @@
       this.style.cursor = 'default';
     });
   });
+</script>
+
+<!-- ───────── PACKAGES CLICK-TO-REVEAL ───────── -->
+<script>
+  (function () {
+    var btn = document.getElementById('pkgToggleBtn');
+    var details = document.getElementById('pkgDetails');
+    if (!btn || !details) return;
+
+    btn.addEventListener('click', function () {
+      var opening = details.style.display === 'none';
+      details.style.display = opening ? 'block' : 'none';
+      btn.textContent = opening ? 'Hide Packages ↑' : 'Show Me The Packages →';
+      if (opening) details.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  })();
+</script>
+
+<!-- ───────── SAVE THIS PAGE POPUP LOGIC ───────── -->
+<script>
+  (function () {
+    var backdrop = document.getElementById('saveBackdrop');
+    var closeBtn = document.getElementById('saveModalClose');
+    var saveBtn = document.getElementById('saveContactBtn');
+    var saveLabel = document.getElementById('saveContactLabel');
+    if (!backdrop || !saveBtn) return;
+
+    function openModal() { document.body.classList.add('save-modal-open'); }
+    function closeModal() { document.body.classList.remove('save-modal-open'); }
+
+    // Only shows for visitors who arrive via the QR code link (?card=1),
+    // so people sent the normal link directly aren't interrupted.
+    // Within that, it only shows again if they never actually tapped
+    // Save last time — there's no way for a webpage to confirm the vCard
+    // was really added to their phone's contacts, so "tapped Save" is the
+    // closest honest signal we have.
+    var alreadySaved = false;
+    try { alreadySaved = localStorage.getItem('lw_card_saved') === '1'; } catch (e) {}
+
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('card') === '1' && !alreadySaved) {
+      openModal();
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', function (e) {
+      if (e.target === backdrop) closeModal();
+    });
+
+    saveBtn.addEventListener('click', function () {
+      var lines = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        'N:Picard;Dean;;;',
+        'FN:Dean Picard',
+        'ORG:LifeWave Independent Brand Partner',
+        'TITLE:LifeWave Independent Brand Partner',
+        'TEL;TYPE=CELL,VOICE:+64212752618',
+        'EMAIL;TYPE=INTERNET:dean.picard@xtra.co.nz',
+        'URL:https://picarda68.github.io/lifewave/',
+        'NOTE:Health, Wealth & Freedom - LifeWave',
+        'END:VCARD'
+      ];
+      var vcard = lines.join('\r\n');
+      try {
+        var blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'Dean-Picard-LifeWave.vcf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+      } catch (e) {}
+
+      saveBtn.classList.add('done');
+      saveLabel.textContent = 'Saved!';
+      try { localStorage.setItem('lw_card_saved', '1'); } catch (e) {}
+
+      setTimeout(closeModal, 900);
+      setTimeout(function () {
+        saveBtn.classList.remove('done');
+        saveLabel.textContent = 'Save & Continue';
+      }, 1400);
+    });
+  })();
 </script>
 
 <button type="button" class="to-top" id="toTop" aria-label="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
